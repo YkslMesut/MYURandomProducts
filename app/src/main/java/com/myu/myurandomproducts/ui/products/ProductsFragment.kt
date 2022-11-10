@@ -16,15 +16,16 @@ import com.myu.myurandomproducts.R
 import com.myu.myurandomproducts.databinding.FragmentProductsBinding
 import com.myu.myurandomproducts.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.log
 
 @AndroidEntryPoint
-class ProductsFragment : Fragment() {
+class ProductsFragment : Fragment() , ProductAdapter.ProductItemListener {
 
     private val TAG = "ProductsFragment"
     private var _binding : FragmentProductsBinding? = null
     private val binding get() = _binding!!
     private val viewModel : ProductsViewModel by viewModels()
-    //private lateinit var adapter : ProductAdapter
+    private lateinit var adapter : ProductAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +40,7 @@ class ProductsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         _binding = FragmentProductsBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -52,27 +53,29 @@ class ProductsFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        /*adapter = CharacterAdapter(this)
-        binding.charactersRv.layoutManager = LinearLayoutManager(requireContext())
-        binding.charactersRv.adapter = adapter*/
+        adapter = ProductAdapter(this)
+        binding.productsRv.layoutManager = LinearLayoutManager(requireContext())
+        binding.productsRv.adapter = adapter
     }
 
     private fun setupObservers() {
-        viewModel.products.observe(viewLifecycleOwner, Observer { response ->
-            when(response.status) {
+        viewModel.products.observe(viewLifecycleOwner) { response ->
+            when (response.status) {
                 Resource.Status.SUCCESS -> {
-                    Log.d(TAG, "setupObservers: " + response.data!!.size)
-                //   binding.progressBar.visibility = View.GONE
-               //     if (!response.data.isNullOrEmpty()) adapter.setItems(ArrayList(response.data))
+                    if (!response.data.isNullOrEmpty()) adapter.setProducts(ArrayList(response.data))
                 }
                 Resource.Status.ERROR -> {
-                    Toast.makeText(activity,response.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, response.message, Toast.LENGTH_SHORT).show()
                 }
                 Resource.Status.LOADING -> {
-                  //  binding.progressBar.visibility = View.VISIBLE
+
                 }
             }
-        })
+        }
+    }
+
+    override fun onClickedProduct(productId: Int) {
+        Log.d(TAG, "onClickedProduct: $productId")
     }
 
 }
