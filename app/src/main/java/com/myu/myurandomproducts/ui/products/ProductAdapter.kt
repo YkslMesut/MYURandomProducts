@@ -29,10 +29,12 @@ class ProductAdapter(private val listener : ProductItemListener) : RecyclerView.
             this.product = product
 
             rowProductsBinding.productName.text = product.title
-        /*Glide.with(itemCharacterBinding.root)
-               .load(item.image)
+            rowProductsBinding.price.text = product.price.toString() + " " + "TL"
+            rowProductsBinding.endDate.text = "25 Kasım 2022"
+            Glide.with(rowProductsBinding.root)
+               .load(product.image)
                 .transform(CircleCrop())
-                .into(itemCharacterBinding.image)*/
+                .into(rowProductsBinding.productImage)
         }
 
         override fun onClick(v: View?) {
