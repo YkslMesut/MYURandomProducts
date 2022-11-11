@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "762332324758",
+    "project_id": "myurandomproducts",
+    "storage_bucket": "myurandomproducts.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762332324758:android:358472275555868e09f3b7",
+        "android_client_info": {
+          "package_name": "com.myu.myurandomproducts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "762332324758-744879gr2keap503vr9okgkqaer07f7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUnqMUunD_aSrz2_A58ejhl2pV7faIfzA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "762332324758-744879gr2keap503vr9okgkqaer07f7d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

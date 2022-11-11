@@ -1,6 +1,8 @@
 package com.myu.myurandomproducts.di
 
 import android.content.Context
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.myu.myurandomproducts.data.local.AppDatabase
@@ -34,11 +36,18 @@ object AppModule {
     fun provideGson(): Gson = GsonBuilder().create()
 
     @Provides
+    fun provideFirebasePath(): String = Constants.PRODUCT_REFERENCE
+
+    @Provides
     fun provideProductService(retrofit: Retrofit): ProductService = retrofit.create(ProductService::class.java)
 
     @Singleton
     @Provides
     fun provideProductRemoteDataSource(productService: ProductService) = ProductRemoteDataSource(productService)
+
+    @Singleton
+    @Provides
+    fun provideDatabaseReference(path: String) = FirebaseDatabase.getInstance().getReference(path)
 
     @Singleton
     @Provides

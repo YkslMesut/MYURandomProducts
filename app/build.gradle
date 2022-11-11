@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-android-extensions'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -92,4 +93,10 @@ dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // Import the Firebase BoM
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation'com.google.firebase:firebase-database'
+    implementation platform('com.google.firebase:firebase-bom:31.0.2')
+
 }
