@@ -1,5 +1,6 @@
 package com.myu.myurandomproducts.ui.products
 
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.myu.myurandomproducts.data.entities.ProductResponseItem
 import com.myu.myurandomproducts.databinding.RowProductsBinding
+import com.myu.myurandomproducts.utils.Helper
 
 class ProductAdapter(private val listener : ProductItemListener) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
@@ -20,17 +22,33 @@ class ProductAdapter(private val listener : ProductItemListener) : RecyclerView.
         View.OnClickListener {
 
         private lateinit var product : ProductResponseItem
+        private  var timer : CountDownTimer? = null
 
         init {
             rowProductsBinding.root.setOnClickListener(this)
         }
 
-        fun bind(product : ProductResponseItem) {
+        fun bind(product : ProductResponseItem,holder: ProductViewHolder) {
             this.product = product
+
+
+
+
+            holder.timer?.cancel()
+            holder.timer = object : CountDownTimer(Helper().getCurrentTimeInMillis(product.remaining_time),1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    val remainingTime = Helper().calculateDateGiveString(product.remaining_time)
+
+                    rowProductsBinding.endDate.text = remainingTime
+                }
+
+                override fun onFinish() {
+                }
+
+            }.start()
 
             rowProductsBinding.productName.text = product.title
             rowProductsBinding.price.text = product.price.toString() + " " + "TL"
-            rowProductsBinding.endDate.text = "25 Kasım 2022"
             Glide.with(rowProductsBinding.root)
                .load(product.image)
                 .transform(CircleCrop())
@@ -59,7 +77,7 @@ class ProductAdapter(private val listener : ProductItemListener) : RecyclerView.
         return products.size
     }
 
-    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) = holder.bind(products[position])
+    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) = holder.bind(products[position],holder)
 
 
 

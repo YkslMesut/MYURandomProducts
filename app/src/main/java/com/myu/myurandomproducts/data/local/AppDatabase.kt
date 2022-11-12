@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.myu.myurandomproducts.data.entities.ProductResponseItem
 
-@Database(entities = [ProductResponseItem ::class], version = 1 , exportSchema = false)
+@Database(entities = [ProductResponseItem ::class], version = 3 , exportSchema = false)
 abstract class AppDatabase : RoomDatabase(){
     abstract fun productDao() : ProductDao
 

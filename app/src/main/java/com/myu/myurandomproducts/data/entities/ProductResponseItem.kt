@@ -18,5 +18,6 @@ data class ProductResponseItem (
     @SerializedName("price")
     val price: Double = 0.0,
     @SerializedName("title")
-    val title: String =""
+    val title: String ="",
+    var remaining_time : String = ""
 )
